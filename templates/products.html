@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Product Management - AI Shop Manager</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <h1>🤖 AI Shop Manager</h1>
+        <p>Product Management System</p>
+    </nav>
+
+
+    <main class="container">
+
+        <div class="page-header">
+            <h2>📦 Product Management</h2>
+
+            <a href="/" class="back-button">
+                ← Dashboard
+            </a>
+        </div>
+
+
+        <!-- Add Product Form -->
+
+        <section class="add-product">
+
+            <h2>➕ Add New Product</h2>
+
+            <form action="/add-product" method="POST">
+
+                <div class="form-group">
+                    <label>Product Name</label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter product name"
+                        required
+                    >
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Price (₹)</label>
+
+                    <input
+                        type="number"
+                        name="price"
+                        placeholder="Enter price"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Stock Quantity</label>
+
+                    <input
+                        type="number"
+                        name="stock"
+                        placeholder="Enter stock quantity"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Category</label>
+
+                    <input
+                        type="text"
+                        name="category"
+                        placeholder="Example: Grocery"
+                        required
+                    >
+
+                </div>
+
+
+                <button type="submit" class="add-button">
+                    ➕ Add Product
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- Products Table -->
+
+        <section class="products-section">
+
+            <h2>📋 All Products</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for product in products %}
+
+                    <tr>
+
+                        <td>{{ product['id'] }}</td>
+
+                        <td>{{ product['name'] }}</td>
+
+                        <td>{{ product['category'] }}</td>
+
+                        <td>₹{{ product['price'] }}</td>
+
+                        <td>{{ product['stock'] }}</td>
+
+                        <td>
+
+                            <a
+                                href="/delete-product/{{ product['id'] }}"
+                                class="delete-button"
+                                onclick="return confirm('Delete this product?')"
+                            >
+                                🗑 Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="6">
+                            No products available.
+                            Add your first product!
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
