@@ -5,9 +5,7 @@ DATABASE = "shop.db"
 
 
 def get_connection():
-
     connection = sqlite3.connect(DATABASE)
-
     return connection
 
 
@@ -16,7 +14,6 @@ def create_product_table():
     connection = get_connection()
 
     try:
-
         connection.execute("""
             CREATE TABLE IF NOT EXISTS products (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,7 +28,6 @@ def create_product_table():
         connection.commit()
 
     finally:
-
         connection.close()
 
 
@@ -40,7 +36,6 @@ def get_all_products():
     connection = get_connection()
 
     try:
-
         cursor = connection.execute("""
             SELECT *
             FROM products
@@ -50,7 +45,6 @@ def get_all_products():
         return cursor.fetchall()
 
     finally:
-
         connection.close()
 
 
@@ -59,7 +53,6 @@ def add_product(name, price, stock, category):
     connection = get_connection()
 
     try:
-
         connection.execute("""
             INSERT INTO products
             (name, price, stock, category)
@@ -74,7 +67,6 @@ def add_product(name, price, stock, category):
         connection.commit()
 
     finally:
-
         connection.close()
 
 
@@ -83,16 +75,12 @@ def delete_product(product_id):
     connection = get_connection()
 
     try:
-
         connection.execute("""
             DELETE FROM products
             WHERE id = ?
-        """, (
-            product_id,
-        ))
+        """, (product_id,))
 
         connection.commit()
 
     finally:
-
         connection.close()
