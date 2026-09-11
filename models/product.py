@@ -1,18 +1,14 @@
-import sqlitecloud
-from config import Config
+import sqlite3
+
+
+DATABASE = "shop.db"
 
 
 def get_connection():
 
-    connection_string = Config.SQLITECLOUD_CONNECTION
+    connection = sqlite3.connect(DATABASE)
 
-    if not connection_string:
-        raise ValueError(
-            "SQLITECLOUD_CONNECTION not found. "
-            "Check your .env file."
-        )
-
-    return sqlitecloud.connect(connection_string)
+    return connection
 
 
 def create_product_table():
@@ -31,6 +27,8 @@ def create_product_table():
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         """)
+
+        connection.commit()
 
     finally:
 
@@ -73,6 +71,8 @@ def add_product(name, price, stock, category):
             category
         ))
 
+        connection.commit()
+
     finally:
 
         connection.close()
@@ -90,6 +90,8 @@ def delete_product(product_id):
         """, (
             product_id,
         ))
+
+        connection.commit()
 
     finally:
 
